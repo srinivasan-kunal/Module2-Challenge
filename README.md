@@ -1,21 +1,32 @@
 # Module2-Challenge
 
-# Project Title
+# Loan Qualifier Application Enhancement
 
-Just after the title, introduce your project by describing attractively what the project is about and what is the main problem that inspires you to create this project or what is the main contribution for the potential user of your project.
+This project aims to update the existing Loan Qualifier Application to allow the user to save the qualified loans to a CSV file.
+
+User Story:
+> "As a user, I need the ability to save the qualifying loans to a CSV file so that I can share the results as a spreadsheet."
+
 
 ---
 
 ## Technologies
 
-Describe the technologies required to use your project such as programming languages, libraries, frameworks, and operating systems. Be sure to include the specific versions of any critical dependencies that you have used in the stable version of your project.
+Key python libraries required for the program are `fire` and `questionary`
 
 ---
 
 ## Installation Guide
 
-In this section, you should include detailed installation notes containing code blocks and screenshots.
+You can install Fire and Questionary from the Python Package Index (PyPI) using the following code 
 
+```python
+pip install fire
+```
+
+```python
+pip install questionary
+```
 ---
 
 ## Usage
@@ -28,6 +39,7 @@ This section should include screenshots, code blocks, or animations explaining h
 
 In this section, list all the people who contribute to this project. You might want recruiters or potential collaborators to reach you, so include your contact email and, optionally, your LinkedIn or Twitter profile.
 
+Kunal Srinivasan
 ---
 
 ## License
