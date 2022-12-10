@@ -7,12 +7,15 @@ This project aims to update the existing Loan Qualifier Application to allow the
 User Story:
 > "As a user, I need the ability to save the qualifying loans to a CSV file so that I can share the results as a spreadsheet."
 
-
 ---
 
 ## Technologies
 
-Key python libraries required for the program are `fire` and `questionary`
+Key python libraries required for the program: 
+
+`fire` (0.3.1) 
+
+`questionary` (1.5.2).
 
 ---
 
@@ -33,15 +36,24 @@ pip install questionary
 
 This section should include screenshots, code blocks, or animations explaining how to use your project.
 
+All the input files and the output files will be created in a <directory>
+
+
+The format of the input location "./data/daily_rate_sheet.csv"
+
+The format of the output location cannot be the same as the daily rate sheet. "<filename>.csv"
+
+
+Picture of the code that was put
+Picture of the CSV output
+
 ---
 
 ## Contributors
-
-In this section, list all the people who contribute to this project. You might want recruiters or potential collaborators to reach you, so include your contact email and, optionally, your LinkedIn or Twitter profile.
 
 Kunal Srinivasan
 ---
 
 ## License
 
-When you share a project on a repository, especially a public one, it's important to choose the right license to specify what others can and can't with your source code and files. Use this section to include the license you want to use.
+2022 edX Bootcamps 

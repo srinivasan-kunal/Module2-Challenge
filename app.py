@@ -7,6 +7,7 @@ Example:
     $ python app.py
 """
 import sys
+import csv
 import fire
 import questionary
 from pathlib import Path
@@ -32,6 +33,7 @@ def load_bank_data():
     """
 
     csvpath = questionary.text("Enter a file path to a rate-sheet (.csv):").ask()
+    # csvpath="./data/daily_rate_sheet.csv"
     csvpath = Path(csvpath)
     if not csvpath.exists():
         sys.exit(f"Oops! Can't find this path: {csvpath}")
@@ -45,6 +47,11 @@ def get_applicant_info():
     Returns:
         Returns the applicant's financial information.
     """
+    # credit_score=750
+    # debt=5000 
+    # income=20000 
+    # loan_amount=100000
+    # home_value=210000
 
     credit_score = questionary.text("What's your credit score?").ask()
     debt = questionary.text("What's your current amount of monthly debt?").ask()
@@ -101,16 +108,64 @@ def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_valu
 
     return bank_data_filtered
 
-
 def save_qualifying_loans(qualifying_loans):
     """Saves the qualifying loans to a CSV file.
 
     Args:
         qualifying_loans (list of lists): The qualifying bank loans.
     """
-    # @TODO: Complete the usability dialog for savings the CSV Files.
-    # YOUR CODE HERE!
 
+    #If there are no qualifying loans the application with exit with a message
+    if len(qualifying_loans) == 0:
+        print(f"Sorry! No offers were found to match your requirement at this time")
+        sys.exit()
+
+    # If there are qualifying loans available the application will prompt user to provide a file name
+    # In case the user accidentally provides the location of the input file, it will prompt an error and 
+    # ask to re-enter the file name 
+    
+
+    else:
+        print(f"Congratulations! There are {int(len(qualifying_loans))} to select from.")
+        save_csv=questionary.confirm("Would you like to save your result?").ask()
+        if not save_csv:
+            print(f"Thank you for your response. The results will not be saved.")
+            sys.exit()
+
+        elif save_csv:
+            output_path=questionary.text("Please provide a name for the result file.").ask()
+            if output_path=="./data/daily_rate_sheet.csv":
+                 print(f"ERROR Message: Output file cannot be the same as input file. Please try again.")
+                 output_path=questionary.text("Where would you like to save your result?").ask()
+
+            # Set the output header
+            header = ["Financial Institution", "Max Loan Amount", "Max Loan To Value", "Max Debt to Income Ratio", "Minumum Credit Score","APR Offered"]
+
+            # Set the output file path
+            result_path = Path(output_path)
+
+            # Pulling the `csv.writer` from csv library to write the header row
+            # and each row of qualifying loan from the `qualifying_loans` list.
+            with open(result_path,'w',newline='') as csvfile:
+                csvwriter=csv.writer(csvfile, delimiter=',')
+                csvwriter.writerow(header)
+                for row in qualifying_loans:
+                    csvwriter.writerow(row)
+
+    #Verification code to open and review the new file created    
+    # with open(result_path) as resultfile:
+    #     data=csv.reader(resultfile)
+    #     counter=0
+
+    #     for rows in data:
+    #         counter+=1
+
+    #         if counter< 5:
+    #             print(rows)
+    #         else:
+    #             sys.exit()
+    #     print(f"Final count of data printed {counter}")
+    return
 
 def run():
     """The main function for running the script."""
