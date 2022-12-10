@@ -135,8 +135,8 @@ def save_qualifying_loans(qualifying_loans):
         elif save_csv:
             output_path=questionary.text("Please provide a name for the result file.").ask()
             if output_path=="./data/daily_rate_sheet.csv":
-                 print(f"ERROR Message: Output file cannot be the same as input file. Please try again.")
-                 output_path=questionary.text("Where would you like to save your result?").ask()
+                 print(f"ERROR: Output file cannot be the same as input file. Please try again.")
+                 sys.exit()
 
             # Set the output header
             header = ["Financial Institution", "Max Loan Amount", "Max Loan To Value", "Max Debt to Income Ratio", "Minumum Credit Score","APR Offered"]

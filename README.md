@@ -1,5 +1,3 @@
-# Module2-Challenge
-
 # Loan Qualifier Application Enhancement
 
 This project aims to update the existing Loan Qualifier Application to allow the user to save the qualified loans to a CSV file.
@@ -34,18 +32,49 @@ pip install questionary
 
 ## Usage
 
-This section should include screenshots, code blocks, or animations explaining how to use your project.
+The app can be initiated by a simple python command `python app.py`. It uses CLIs to get several other details from the user. 
 
-All the input files and the output files will be created in a <directory>
+The first user prompt is for the location and name of the "daily rate sheet". The same may be used from [data](./data/). Input for this prompt must include the file name along with it's relative path (e.g. "./data/<'filename'>.csv").
 
+Further the application will prompt the user for details of the loan application like score, debt, income, loan value and property value. Based on the input eligible offers will be pulled from the input data base. (details not shown here) 
 
-The format of the input location "./data/daily_rate_sheet.csv"
+In case offers are available based on the values provided by the user there will be a prompt to save the results to a file. Once confirmed the user will be prompted for a file name (which must be provided along with the extension .csv). The application will print the file in the same location as the program.
 
-The format of the output location cannot be the same as the daily rate sheet. "<filename>.csv"
+The user will be exited from the application in four events
+1) The input file does not exist (not shown in the code below)
+2) There are no qualifying loan offers
+3) The user decides not to save the results
+4) The user accidentally provides the input path and file name when prompted for output file name
 
+```python
+    if len(qualifying_loans) == 0:
+        print(f"Sorry! No offers were found to match your requirement at this time")
+        sys.exit()
+    else:
+        print(f"Congratulations! There are {int(len(qualifying_loans))} to select from.")
+        save_csv=questionary.confirm("Would you like to save your result?").ask()
+        if not save_csv:
+            print(f"Thank you for your response. The results will not be saved.")
+            sys.exit()
 
-Picture of the code that was put
-Picture of the CSV output
+        elif save_csv:
+            output_path=questionary.text("Please provide a name for the result file.").ask()
+            if output_path=="./data/daily_rate_sheet.csv":
+                 print(f"ERROR: Output file cannot be the same as input file. Please try again.")
+                 sys.exit()
+
+            header = ["Financial Institution", "Max Loan Amount", "Max Loan To Value", "Max Debt to Income Ratio", "Minumum Credit Score","APR Offered"]
+
+            result_path = Path(output_path)
+
+            with open(result_path,'w',newline='') as csvfile:
+                csvwriter=csv.writer(csvfile, delimiter=',')
+                csvwriter.writerow(header)
+                for row in qualifying_loans:
+                    csvwriter.writerow(row)
+```
+
+As an extension, a feature has been added at the prompt of result file name which prevents a new user from accidentally using the input file name and location for the output. This will give them a warning and exit the application. Further improvements may be made to this feature in the furture.
 
 ---
 
