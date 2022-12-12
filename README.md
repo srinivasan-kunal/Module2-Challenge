@@ -62,16 +62,8 @@ The user will be exited from the application in four events
             if output_path=="./data/daily_rate_sheet.csv":
                  print(f"ERROR: Output file cannot be the same as input file. Please try again.")
                  sys.exit()
-
-            header = ["Financial Institution", "Max Loan Amount", "Max Loan To Value", "Max Debt to Income Ratio", "Minumum Credit Score","APR Offered"]
-
-            result_path = Path(output_path)
-
-            with open(result_path,'w',newline='') as csvfile:
-                csvwriter=csv.writer(csvfile, delimiter=',')
-                csvwriter.writerow(header)
-                for row in qualifying_loans:
-                    csvwriter.writerow(row)
+            else:
+                print_csv(output_path,qualifying_loans)
 ```
 
 As an extension, a feature has been added at the prompt of result file name which prevents a new user from accidentally using the input file name and location for the output. This will give them a warning and exit the application. Further improvements may be made to this feature in the furture.

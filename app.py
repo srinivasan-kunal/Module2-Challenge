@@ -12,7 +12,7 @@ import fire
 import questionary
 from pathlib import Path
 
-from qualifier.utils.fileio import load_csv
+from qualifier.utils.fileio import (load_csv,print_csv)  #Including print csv function in the module call
 
 from qualifier.utils.calculators import (
     calculate_monthly_debt_ratio,
@@ -119,52 +119,25 @@ def save_qualifying_loans(qualifying_loans):
     if len(qualifying_loans) == 0:
         print(f"Sorry! No offers were found to match your requirement at this time")
         sys.exit()
-
-    # If there are qualifying loans available the application will prompt user to provide a file name
-    # In case the user accidentally provides the location of the input file, it will prompt an error and 
-    # ask to re-enter the file name 
-    
-
     else:
         print(f"Congratulations! There are {int(len(qualifying_loans))} to select from.")
+        # If there is at least one qualifying role available the application will offer the choice to save the resuts
         save_csv=questionary.confirm("Would you like to save your result?").ask()
         if not save_csv:
+            # Application will exit if the user does not wish to save the results
             print(f"Thank you for your response. The results will not be saved.")
             sys.exit()
 
         elif save_csv:
+            # User will need to provide a file name if they choose to save the results
             output_path=questionary.text("Please provide a name for the result file.").ask()
+            # If there are qualifying loans available the application will prompt user to provide a file name
+            # In case the user accidentally provides the location of the input file, it will prompt an error and exit 
             if output_path=="./data/daily_rate_sheet.csv":
                  print(f"ERROR: Output file cannot be the same as input file. Please try again.")
                  sys.exit()
-
-            # Set the output header
-            header = ["Financial Institution", "Max Loan Amount", "Max Loan To Value", "Max Debt to Income Ratio", "Minumum Credit Score","APR Offered"]
-
-            # Set the output file path
-            result_path = Path(output_path)
-
-            # Pulling the `csv.writer` from csv library to write the header row
-            # and each row of qualifying loan from the `qualifying_loans` list.
-            with open(result_path,'w',newline='') as csvfile:
-                csvwriter=csv.writer(csvfile, delimiter=',')
-                csvwriter.writerow(header)
-                for row in qualifying_loans:
-                    csvwriter.writerow(row)
-
-    #Verification code to open and review the new file created    
-    # with open(result_path) as resultfile:
-    #     data=csv.reader(resultfile)
-    #     counter=0
-
-    #     for rows in data:
-    #         counter+=1
-
-    #         if counter< 5:
-    #             print(rows)
-    #         else:
-    #             sys.exit()
-    #     print(f"Final count of data printed {counter}")
+            else:
+                print_csv(output_path,qualifying_loans)
     return
 
 def run():
