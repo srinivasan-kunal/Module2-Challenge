@@ -32,16 +32,16 @@ pip install questionary
 
 ## Usage
 
-The app can be initiated by a simple python command `python app.py`. It uses CLIs to get several other details from the user. 
+The app can be initiated by a simple python command `python app.py`. It uses CLIs to get several other inputs from the user. 
 
-The first user prompt is for the location and name of the "daily rate sheet". The same may be used from [data](./data/). Input for this prompt must include the file name along with it's relative path (e.g. "./data/<'filename'>.csv").
+The first user prompt is for the location and name of the "daily rate sheet". Input for this prompt must include the file name along with it's relative path (e.g. "./data/<'filename'>.csv"). The same may be used from the location [data](./data/). 
 
-Further the application will prompt the user for details of the loan application like score, debt, income, loan value and property value. Based on the input eligible offers will be pulled from the input data base. (details not shown here) 
+Next the application will prompt the user for details of the loan application like score, debt, income, loan value and property value. Based on the inputs eligible offers are pulled from the input data base. (details not shown here). 
 
-In case offers are available based on the values provided by the user there will be a prompt to save the results to a file. Once confirmed the user will be prompted for a file name (which must be provided along with the extension .csv). The application will print the file in the same location as the program.
+In case there are no qualifying offers, the user will be notified and application will be exit. In case offers are available based on the values provided by the user there will be a prompt to save the results to a file. If confirmed by the user the application will prompt for an output file name (which must be provided along with the extension .csv). The application will print the file in the same location as the program i.e. the main directory.
 
 The user will be exited from the application in four events
-1) The input file does not exist (not shown in the code below)
+1) The input rate file does not exist (not shown in the code below)
 2) There are no qualifying loan offers
 3) The user decides not to save the results
 4) The user accidentally provides the input path and file name when prompted for output file name
@@ -66,13 +66,15 @@ The user will be exited from the application in four events
                 print_csv(output_path,qualifying_loans)
 ```
 
-As an extension, a feature has been added at the prompt of result file name which prevents a new user from accidentally using the input file name and location for the output. This will give them a warning and exit the application. Further improvements may be made to this feature in the furture.
+As an extension, a feature has been added at the prompt of result file name which prevents a new user from accidentally using the input file name and location for the output. In the present version this event will result in a warning and exit the application. Further improvements may be made to this feature in the furture.
 
 ---
 
 ## Contributors
 
+
 Kunal Srinivasan
+
 ---
 
 ## License

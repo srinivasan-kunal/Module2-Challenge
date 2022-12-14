@@ -33,7 +33,6 @@ def load_bank_data():
     """
 
     csvpath = questionary.text("Enter a file path to a rate-sheet (.csv):").ask()
-    # csvpath="./data/daily_rate_sheet.csv"
     csvpath = Path(csvpath)
     if not csvpath.exists():
         sys.exit(f"Oops! Can't find this path: {csvpath}")
@@ -134,10 +133,11 @@ def save_qualifying_loans(qualifying_loans):
             # If there are qualifying loans available the application will prompt user to provide a file name
             # In case the user accidentally provides the location of the input file, it will prompt an error and exit 
             if output_path=="./data/daily_rate_sheet.csv":
-                 print(f"ERROR: Output file cannot be the same as input file. Please try again.")
-                 sys.exit()
-            else:
+                print(f"ERROR: Output file cannot be the same as input file. Please try again.")
+                sys.exit()
+            else:    
                 print_csv(output_path,qualifying_loans)
+
     return
 
 def run():
